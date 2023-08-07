@@ -63,7 +63,7 @@ update_operating_system() {
     echo ""
     echo "A resolver o alerta de sistema incompatível..."
     echo ""
-    sed -i 's#Armbian 23.02.0-trunk Bullseye#Debian GNU/Linux 11 (bullseye)#g'  /etc/os-release
+    sed -i 's#Armbian 23.08.0-trunk Bullseye#Debian GNU/Linux 11 (bullseye)#g'  /etc/os-release
 }
 
 # ------------------------------------------------------------------------------
@@ -131,7 +131,7 @@ install_hassio() {
   apt-get update
   apt-get install udisks2 wget -y
   wget https://github.com/home-assistant/supervised-installer/releases/latest/download/homeassistant-supervised.deb
-  sudo dpkg -i homeassistant-supervised.deb
+  sudo dpkg -i --ignore-depends=systemd-resolved homeassistant-supervised.deb
 }
 
 # ==============================================================================
@@ -148,9 +148,9 @@ main() {
 
   # Install ALL THE THINGS!
   update_hostname
-#  update_armbian
+  update_armbian
   repair_apparmor_and_cgroups
-  install_armbian-software
+  #install_armbian-software
   update_operating_system
   install_dependences
   install_docker
